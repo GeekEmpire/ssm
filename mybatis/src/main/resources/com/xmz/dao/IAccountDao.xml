@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xmz.dao.IAccountDao">
+
+<!--    定义封装account和user的resultMap-->
+    <resultMap id="accountUserMap" type="account">
+        <id property="id" column="id"></id>
+        <result property="uid" column="uid"></result>
+        <result property="money" column="money"></result>
+        <!--一对一关系映射，配置封装user的内容-->
+<!--        <association property="user" column="uid" javaType="user">-->
+<!--            <id property="id" column="id"></id>-->
+<!--            <result column="username" property="username"></result>-->
+<!--            <result column="address" property="address"></result>-->
+<!--            <result column="sex" property="sex"></result>-->
+<!--            <result column="birthday" property="birthday"></result>-->
+<!--        </association>-->
+<!--
+        select属性指定查询用户的唯一标识
+        column属性指定更具用户id查询所需要的参数
+ -->
+        <association property="user" column="uid" javaType="user" select="com.xmz.dao.IUserDao.findById"></association>
+    </resultMap>
+
+<!--    <select id="findAll" resultType="account">-->
+<!--        select * from account-->
+<!--    </select>-->
+    <select id="findAll" resultMap="accountUserMap">
+        select * from account
+    </select>
+
+    <select id="findAccountById" resultType="account">
+        select * from account where uid = #{uid}
+    </select>
+
+<!--    查询所以账户包含用户名和地址信息-->
+    <select id="findAllAccount" resultType="accountuser">
+        select a.*,u.username,u.address from account a, user u where u.id = a.uid;
+    </select>
+
+</mapper>
