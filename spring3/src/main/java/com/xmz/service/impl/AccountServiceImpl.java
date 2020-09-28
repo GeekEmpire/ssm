@@ -4,23 +4,23 @@ import com.xmz.dao.IAccountDao;
 import com.xmz.domain.Account;
 import com.xmz.service.IAccountService;
 import com.xmz.utils.TransactionManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * 账户的业务层实现类
  */
+@Service("accountService")
 public class AccountServiceImpl implements IAccountService{
 
+    @Autowired
     private IAccountDao accountDao;
     private TransactionManager transactionManager;
 
     public void setTransactionManager(TransactionManager transactionManager) {
         this.transactionManager = transactionManager;
-    }
-
-    public void setAccountDao(IAccountDao accountDao) {
-        this.accountDao = accountDao;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class AccountServiceImpl implements IAccountService{
         Account source = accountDao.findAccountByName(sourceName);
         Account target = accountDao.findAccountByName(targetName);
         source.setMoney(source.getMoney()-money);
-        int i = 1/0;
+//        int i = 1/0;
         target.setMoney(target.getMoney()+money);
         accountDao.updateAccount(source);
         accountDao.updateAccount(target);

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/aop
-        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--配置代理的service-->
+    <bean id="proxyAccountService" factory-bean="beanFactory" factory-method="getAccountService"></bean>
+    <!--配置beanFactory-->
+    <bean id="beanFactory" class="com.xmz.factory.BeanFactory_old">
+        <property name="accountService" ref="accountService"></property>
+        <property name="transactionManager" ref="transactionManager"></property>
+     </bean>
 
     <!-- 配置Service -->
     <bean id="accountService" class="com.xmz.service.impl.AccountServiceImpl">
@@ -48,15 +52,4 @@
     <bean id="transactionManager" class="com.xmz.utils.TransactionManager">
         <property name="connectionUtils" ref="connectionUtils"></property>
     </bean>
-
-    <!--配置aop-->
-    <aop:config>
-        <aop:pointcut id="pt1" expression="execution(* com.xmz.service.impl.*.*(..))"/>
-        <aop:aspect id="txAdvice" ref="transactionManager">
-            <aop:before method="beginTransaction" pointcut-ref="pt1"></aop:before>
-            <aop:after-returning method="commit" pointcut-ref="pt1"></aop:after-returning>
-            <aop:after-throwing method="rollback" pointcut-ref="pt1"></aop:after-throwing>
-            <aop:after method="release" pointcut-ref="pt1"></aop:after>
-        </aop:aspect>
-    </aop:config>
 </beans>
