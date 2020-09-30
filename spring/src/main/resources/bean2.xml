@@ -6,8 +6,8 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
-    <!--context名称空间和约束-->
 
+    <!--context名称空间和约束-->
     <context:component-scan base-package="com.xmz"></context:component-scan>
 
 

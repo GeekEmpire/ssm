@@ -19,12 +19,18 @@
         <input type="submit" value="提交">
     </form>
 
-    <a href="anno/testPathVariable/10"></a>
+    <a href="anno/testPathVariable/10"></a><br>
 
-    <a href="anno/RequestHeader">RequestHeader</a>
+    <a href="anno/RequestHeader">RequestHeader</a><br>
 
-    <a href="anno/testCookieValue">testCookieValue</a>
+    <a href="anno/testCookieValue">testCookieValue</a><br>
 
+    <form action="/anno/testModelAttribute" method="post">
+        username:<input type="text" name="username"><br>
+        age:<input type="text" name="age"><br>
+        <input type="submit" value="提交">
+    </form><br>
 
+    <a href="anno/testSessionAttributes">testSessionAttributes</a><br>
 </body>
 </html>
